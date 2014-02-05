@@ -40,11 +40,17 @@ local_settings.py
 settings
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Ignore sqlite db used for testing
 omop_harvest.db
 
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+# Ignore sqlite db used for testing
+omop_harvest.db
+
+>>>>>>> 63deca3... Added sqlite db to gitignore
 # Ignore optimized scripts
 omop_harvest/static/scripts/javascript/min
 

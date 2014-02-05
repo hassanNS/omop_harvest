@@ -42,6 +42,7 @@ urlpatterns = patterns(
         name='registration-complete'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name':'login.html'}, name='login'),
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     url(r'^', include('chopauth.urls')),
 )
@@ -49,6 +50,10 @@ urlpatterns = patterns(
 =======
 )
 
+=======
+)
+
+>>>>>>> 1b088df... Make chopauth functional in dev/prod and optional in local
 # If chopauth is available, include those urls
 try:
     urlpatterns += patterns('',
@@ -59,7 +64,10 @@ except ImportError:
         url(r'^', include('registration.urls')),
     )
 
+<<<<<<< HEAD
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+>>>>>>> 1b088df... Make chopauth functional in dev/prod and optional in local
 # In production, these two locations must be served up statically
 urlpatterns += patterns('django.views.static',
     url(r'^{0}(?P<path>.*)$'.format(re.escape(settings.MEDIA_URL.lstrip('/'))), 'serve', {

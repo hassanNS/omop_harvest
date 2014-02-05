@@ -42,10 +42,14 @@ You can install this project on your local server, using any dataset in OMOP CDM
 ### 4. Load data into your database
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Using an OMOP released OSIM2 dataset
 =======
 - Using an OMOP released OSIM2 dataset (please review `etl/KNOWN_ISSUES.md` before filing issues related to this process)
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+- Using an OMOP released OSIM2 dataset (please review `etl/KNOWN_ISSUES.md` before filing issues related to this process)
+>>>>>>> c9b7368... Remove etl/README and reference etl/KNOWN_ISSUES in README
 
     - Download and Extract Data
     

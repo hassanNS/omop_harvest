@@ -364,5 +364,6 @@ HAYSTACK_CONNECTIONS = {
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 
 AVOCADO = {
+    'DATA_CHACHE_ENABLED': False,
     'METADATA_MIGRATION_APP': 'omop_harvest',
 }

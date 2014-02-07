@@ -5,10 +5,14 @@
     // Optimize relative to this url (i.e. the current directory)
     baseUrl: '.',
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+    
+>>>>>>> f804520... Use static/scripts from cbttc
     // The source directory of the modules
     appDir: 'src',
 
@@ -19,6 +23,7 @@
 
     optimizeCss: 'none',
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     loglevel: 1,
 
@@ -39,6 +44,8 @@
 
     name: 'main'
 =======
+=======
+>>>>>>> f804520... Use static/scripts from cbttc
     paths: {
         'cilantro': 'empty:',
         'project': '.'
@@ -46,5 +53,8 @@
 
     name: 'main'
 
+<<<<<<< HEAD
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+>>>>>>> f804520... Use static/scripts from cbttc
 })

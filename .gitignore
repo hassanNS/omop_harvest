@@ -12,9 +12,13 @@
 *.egg-info
 pip-log.txt
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 .python-version
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+.python-version
+>>>>>>> fe6aa50... Ignoring .python-version
 
 # Server-related
 *.sock
@@ -28,9 +32,13 @@ MANIFEST
 # Fabric hosts if using the provided fabfile.py
 .fabhosts
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 .project_config.json
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+.project_config.json
+>>>>>>> 1fb06a0... Ignore .project_config.json
 
 # Avocado search engine index
 whoosh.index

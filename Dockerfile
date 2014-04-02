@@ -6,7 +6,15 @@ MAINTAINER Le Mar Davidson "davidsonl2@email.chop.edu"
 
 # Base Harvest System Software
 RUN apt-get update -qq --fix-missing
+<<<<<<< HEAD
+<<<<<<< HEAD
 RUN apt-get install -y curl python-dev python-setuptools supervisor git-core libpq-dev libsasl2-dev libldap2-dev openssl memcached curl python-dev python-setuptools supervisor git-core libpq-dev libldap2-dev libsasl2-dev build-essential libssl-dev redis-server libxml2-dev libxslt1-dev  zlib1g-dev wget ruby
+=======
+RUN apt-get install -y curl python-dev python-setuptools supervisor git-core libpq-dev libsasl2-dev libldap2-dev openssl memcached
+>>>>>>> 54c9504... Adding a Dockefile flexible enough to run externally on Travis and Internally.
+=======
+RUN apt-get install -y curl python-dev python-setuptools supervisor git-core libpq-dev libsasl2-dev libldap2-dev openssl memcached curl python-dev python-setuptools supervisor git-core libpq-dev libldap2-dev libsasl2-dev build-essential libssl-dev redis-server libxml2-dev libxslt1-dev  zlib1g-dev wget ruby
+>>>>>>> b2a7891... Get etcd app configuration settings when starting the container
 RUN easy_install pip
 RUN pip install virtualenv
 RUN pip install uwsgi
@@ -59,14 +67,47 @@ RUN dpkg -i scala-2.9.3.deb
 RUN apt-get update
 RUN apt-get install -y scala
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+RUN apt-get update -qq --fix-missing
+RUN apt-get install -y ruby
+#RUN apt-get install -y rubygems
+RUN apt-get install -y curl python-dev python-setuptools supervisor git-core libpq-dev libldap2-dev libsasl2-dev openssl memcached  build-essential libssl-dev redis-server libxml2-dev libxslt1-dev  zlib1g-dev wget
+
+>>>>>>> 54c9504... Adding a Dockefile flexible enough to run externally on Travis and Internally.
+=======
+>>>>>>> b2a7891... Get etcd app configuration settings when starting the container
 RUN (cd /tmp && git clone https://github.com/joyent/node.git)
 RUN (cd /tmp/node && git checkout v0.10.26 && ./configure && make && make install)
 RUN (apt-get install -y npm)
 RUN (npm install -g coffee-script)
+<<<<<<< HEAD
+<<<<<<< HEAD
 RUN apt-get update -qq --fix-missing
 RUN gem install rubygems-update    &&  \
     update_rubygems                &&  \
     gem install sass bourbon
+<<<<<<< HEAD
+=======
+=======
+RUN apt-get update -qq --fix-missing
+<<<<<<< HEAD
+RUN apt-get install -y rubygems
+>>>>>>> b2a7891... Get etcd app configuration settings when starting the container
+=======
+RUN wget http://rubyforge.org/frs/download.php/38646/rubygems-1.2.0.tgz   && \
+    tar -xzvf rubygems-1.2.0.tgz                                          && \
+    cd rubygems-1.2.0                                                     && \
+    ruby setup.rb                                                         && \
+    ln -s /usr/bin/gem1.8 /usr/bin/gem                                    && \
+    gem update --system                                                   
+>>>>>>> 4220601... Install rubygems from tar package
+RUN (gem install sass)
+RUN (gem install bourbon)
+>>>>>>> 54c9504... Adding a Dockefile flexible enough to run externally on Travis and Internally.
+=======
+>>>>>>> d28547c... install rubygems-update
 
 # Python dependencies
 
@@ -102,9 +143,12 @@ RUN /opt/ve/harvest-app/bin/pip install Markdown
 RUN /opt/ve/harvest-app/bin/pip install pycap
 RUN /opt/ve/harvest-app/bin/pip install csvkit
 
+<<<<<<< HEAD
 # Upgrades
 RUN /opt/ve/harvest-app/bin/pip install -U "avocado>=2.3.0,<2.4.0" "whoosh>=2.6,<2.7" "django-haystack>=2.0,<2.2"
 
+=======
+>>>>>>> 54c9504... Adding a Dockefile flexible enough to run externally on Travis and Internally.
 # Add the application files
 ADD . /opt/apps/harvest-app
 

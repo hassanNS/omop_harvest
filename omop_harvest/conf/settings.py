@@ -1,5 +1,6 @@
 import os
 <<<<<<< HEAD
+<<<<<<< HEAD
 from global_settings import *
 
 try:
@@ -28,16 +29,21 @@ if FORCE_SCRIPT_NAME:
     LOGOUT_URL = os.path.join(FORCE_SCRIPT_NAME, LOGOUT_URL[1:])
     LOGIN_REDIRECT_URL = os.path.join(FORCE_SCRIPT_NAME, LOGIN_REDIRECT_URL[1:])
 =======
+=======
+>>>>>>> e781ef4... Adding django conf files for enabling CID
 import json
 from base import *
 from app import *
 import dj_database_url
 
+<<<<<<< HEAD
 try:
     from chopauth.settings import *
 except ImportError:
     pass
 
+=======
+>>>>>>> e781ef4... Adding django conf files for enabling CID
 curdir = os.path.dirname(os.path.abspath(__file__))
 project_settings = json.loads(open(os.path.join(curdir, '../../.project_config.json'), 'r').read())['project_settings']
 
@@ -60,6 +66,10 @@ if LINKED_DB_IP:
 else:
     DATABASES = {
         'default': dj_database_url.parse(project_settings[environment]['databases']['default']),
+<<<<<<< HEAD
+=======
+        'portal': dj_database_url.parse(project_settings[environment]['databases']['portal']),
+>>>>>>> e781ef4... Adding django conf files for enabling CID
     }
 
 
@@ -75,16 +85,24 @@ if LINKED_MEMCACHE:
 else:
     CACHES = {
         'default': {
+<<<<<<< HEAD
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
             'LOCATION': 'unique',
             'KEY_PREFIX': 'omop_harvest',
             'VERSION': 1,
+=======
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+>>>>>>> e781ef4... Adding django conf files for enabling CID
         }
     }
 
 EMAIL_PORT = project_settings[environment]['django']['EMAIL_PORT']
 
+<<<<<<< HEAD
 EMAIL_SUBJECT_PREFIX = '[OMOP Harvest] '
+=======
+EMAIL_SUBJECT_PREFIX = '[brand_new Local] '
+>>>>>>> e781ef4... Adding django conf files for enabling CID
 
 DEBUG = project_settings[environment]['django']['DEBUG']
 
@@ -92,6 +110,7 @@ FORCE_SCRIPT_NAME = project_settings[environment]['django']['FORCE_SCRIPT_NAME']
 
 SECRET_KEY = project_settings[environment]['django']['SECRET_KEY']
 
+<<<<<<< HEAD
 # LDAP
 LDAP = {}
 LDAP['DEBUG'] = project_settings[environment]['django']['LDAP']['DEBUG']
@@ -103,3 +122,10 @@ LDAP['PREBINDPW'] = project_settings[environment]['django']['LDAP']['PREBINDPW']
 
 REGISTRATION_MODERATORS = project_settings[environment]['django']['REGISTRATION_MODERATORS']
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+# eHB Integration
+
+SERVICE_CLIENT_SETTINGS = project_settings[environment]['django']['SERVICE_CLIENT_SETTINGS'],
+
+PROTOCOL_PROPS = project_settings[environment]['django']['PROTOCOL_PROPS']
+>>>>>>> e781ef4... Adding django conf files for enabling CID

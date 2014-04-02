@@ -1,9 +1,16 @@
 from __future__ import print_function, with_statement
 import os
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import sys
+import stat
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 import json
+import etcd
 from functools import wraps
 from fabric.api import *
+<<<<<<< HEAD
 from fabric.colors import red, yellow, white
 =======
 import sys
@@ -14,11 +21,15 @@ from functools import wraps
 from fabric.api import *
 from fabric.colors import red, yellow, white, green
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+from fabric.colors import red, yellow, white, green
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 from fabric.contrib.console import confirm
 from fabric.contrib.files import exists
 
 
 __doc__ = """\
+<<<<<<< HEAD
 <<<<<<< HEAD
 Before using this fabfile, you must create a .fabhosts in your project
 directory. It is a JSON file with the following structure:
@@ -55,56 +66,66 @@ object, but the above settings are required at a minimum.
 =======
 Help Doc
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+Help Doc
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 """
 
 # A few setup steps and environment checks
 curdir = os.path.dirname(os.path.abspath(__file__))
+<<<<<<< HEAD
 <<<<<<< HEAD
 hosts_file = os.path.join(curdir, '.fabhosts')
 
 # Check for the .fabhosts file
 if not os.path.exists(hosts_file):
     abort(white(__doc__))
+=======
+config_file = os.path.join(curdir, '.project_config.json')
 
-base_settings = {
-    'host_string': '',
-    'path': '',
-    'repo_url': '',
-    'nginx_conf_dir': '',
-    'supervisor_conf_dir': '',
-}
+try:
+    project_config = json.loads(open(config_file, 'r').read())
+except:
+    project_config = {
+        "etcd_host": env.etcd_host,
+        "docker_registry":env.registry_host
+    }
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 
-required_settings = ['host_string', 'path', 'repo_url',
-    'nginx_conf_dir', 'supervisor_conf_dir']
+hidden_output = []
 
+try:
+    venv_wrap_path = os.environ['WORKON_HOME']
+except KeyError:
+    venv_wrap_path = None
+
+if venv_wrap_path and os.path.exists(os.path.join(venv_wrap_path, 'omop_harvest')):
+    full_env_path = os.path.join(venv_wrap_path, 'omop_harvest')
+else:
+    full_env_path = os.path.abspath('..')
+    venv_wrap_path = None
 
 def get_hosts_settings():
-    # Load all the host settings
-    hosts = json.loads(open(hosts_file).read())
+    # TODO: Will probably have to retain this to support legacy deploy.
 
+    # Load all the host settings
+    try:
+        hosts = json.loads(open(config_file).read())['hosts']
+    except KeyError:
+        abort(red('Error: No host settings are defined in the project configuration'))
     # Pop the default settings
-    default_settings = hosts.pop('_', {})
 
     # Pre-populated defaults
-    for host in hosts:
-        base = base_settings.copy()
-        base.update(default_settings)
-        base.update(hosts[host])
-        hosts[host] = base
+    # for host in hosts:
+    #     base = base_settings.copy()
+    #     base.update(default_settings)
+    #     print(hosts)
+    #     base.update(hosts[host])
+    #     hosts[host] = base
 
-    if not env.hosts:
-        abort(red('Error: At least one host must be specified'))
-
-    # Validate all hosts have an entry in the .hosts file
-    for target in env.hosts:
-        if target not in hosts:
-            abort(red('Error: No settings have been defined for the "{}" host'.format(target)))
-        settings = hosts[target]
-        for key in required_settings:
-            if not settings[key]:
-                abort(red('Error: The setting "{}" is not defined for "{}" host'.format(key, target)))
     return hosts
 
+<<<<<<< HEAD
 =======
 config_file = os.path.join(curdir, '.project_config.json')
 
@@ -149,6 +170,8 @@ def get_hosts_settings():
 
     return hosts
 
+=======
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 # ** Decorators
 def virtualenv(path, venv_wrap):
     "Wraps a function and prefixes the call with the virtualenv active."
@@ -171,7 +194,10 @@ def virtualenv(path, venv_wrap):
                 return func(*args, **kwargs)
         return inner
     return decorator
+<<<<<<< HEAD
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 
 def host_context(func):
     "Sets the context of the setting to the current host"
@@ -183,144 +209,136 @@ def host_context(func):
     return decorator
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+# ---------------------------------------------------------------
+# Configuration Commands
+# ---------------------------------------------------------------
+
+def set_configuration(noinput=False):
+    '''
+    Takes the settings in .project_config.json file and writes them to the
+    appropriate etcd endpoint for this application.
+
+    ab set_configuration:noinput=True will not prompt for confirmation
+    '''
+    client = etcd.Client(host=project_config['etcd_host'])
+    config = json.loads(open('.project_config.json', 'r').read())
+
+    if noinput or confirm("Are you sure you want to upload your local settings?"):
+        client.write('/applications/omop_harvest/configuration', json.dumps(config))
+
+
+def get_configuration(noinput=False):
+    '''
+    Retrieves the applications settings from etcd and generates a local settings file.
+
+    fab get_configuration:noinput=True will not prompt for confirmation
+    '''
+    client = etcd.Client(host=project_config['etcd_host'])
+    try:
+        etcd_config = client.read('/applications/omop_harvest/configuration')
+    except KeyError:
+        abort(red('Error: No host settings found on etcd'))
+
+    configuration = json.loads(etcd_config.value)
+    if configuration == {}:
+        print(red('Empty configuration found. Aborting'))
+        sys.exit(1)
+
+    # Establish the configuration locally
+    if noinput or confirm('Are you sure you want to overwrite your local settings?'):
+        f = open('.project_config.json', 'w')
+        f.write(json.dumps(configuration, indent=4, sort_keys=True))
+        f.close()
+
+# ---------------------------------------------------------------
+# Docker Commands
+# ---------------------------------------------------------------
+# TODO:
+# - Continuous Integration. Automatic provisioning of services
+
+
+def build_container(noinput=False):
+    # Check git status to make sure our build hash matches our git commit
+    index_status = local('git status --porcelain', capture=True)
+    if index_status != '':
+        abort('Please commit or stash any changes to git before building your container')
+
+    try:
+        get_configuration(noinput)
+    except:
+        if not confirm('Unable to retrieve configuration. Would you like to attempt to build this container with locally available settings?'):
+            sys.exit(1)
+    git_hash = local('git rev-parse --short HEAD', capture=True)
+    git_branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
+
+    local('docker build -t omop_harvest-{0}:{1} .'.format(git_branch, git_hash))
+
+def test_container():
+    git_hash = local('git rev-parse --short HEAD', capture=True)
+    git_branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
+    local('docker run -i -t -e APP_ENV=test omop_harvest-{0}:{1} test'.format(git_branch, git_hash))
+
+def build_and_test():
+    build_container(noinput=True)
+    test_container()
+
+# Remote Deployment Commands
+
+def pull_repo():
+    local('docker pull {0}/omop_harvest-{1}'.format(project_config['docker_registry'], git_branch))
+
+def push_to_repo():
+    git_hash = local('git rev-parse --short HEAD', capture=True)
+    git_branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
+
+    try:
+        with hide('output'):
+            local("docker inspect --format='{{{{.id}}}}' omop_harvest-{0}:{1}".format(git_branch, git_hash))
+    except:
+        if confirm('Could not find most most recent container. Would you like to build it?'):
+            build_container()
+
+    local('docker tag omop_harvest-{0}:{1} {2}/omop_harvest-{0}:{1}'.format(git_branch, git_hash, project_config['docker_registry']))
+    local('docker tag omop_harvest-{0}:{1} {2}/omop_harvest-{0}:latest'.format(git_branch, git_hash, project_config['docker_registry']))
+    local('docker push {0}/omop_harvest-{1}'.format(project_config['docker_registry'], git_branch))
+    local('docker rmi -f {0}/omop_harvest-{1}:{2}'.format(project_config['docker_registry'], git_branch, git_hash))
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 
 @host_context
-def merge_commit(commit):
-    "Fetches the latest code and merges up the specified commit."
-    with cd(env.path):
-        run('git fetch')
-        if '@' in commit:
-            branch, commit = commit.split('@')
-            run('git checkout {}'.format(branch))
-        run('git merge {}'.format(commit))
+def deploy(commit='latest'):
 
+    run('docker pull {0}/omop_harvest-{1}:{2}'.format(project_config['docker_registry'], env.git_branch, commit))
+    container = run('docker run -d -p :8000 -e APP_ENV={0} {1}/omop_harvest-{2}:{3} start'.format(
+        env.host,
+        project_config['docker_registry'],
+        env.git_branch,
+        commit)
+    )
+    port = run("docker inspect --format='{{{{range $p, $conf := .NetworkSettings.Ports}}}}{{{{(index $conf 0).HostPort}}}} {{{{end}}}}' {0}".format(container))
+    commit_msg = local('git --no-pager log --oneline -1', capture = True)
+    auth_token = project_config['hipchat']['auth_token']
+    deploy_msg = 'omop_harvest-{0}:{1} now deployed at http://{2}:{3} <a href="http://{2}:{3}">Open</a> <a href="http://{4}:4001/v2/keys/applications/omop_harvest/status">Status</a> -- {5}'.format(env.git_branch, commit, env.host_string, port, project_config['etcd_host'], commit_msg)
 
-@host_context
-def current_commit():
-    with cd(env.path):
-        run('git log -1')
-        run('git status')
+    # Notifications
+    local('curl -d "room_id=529405&from=deployservice&color=yellow" --data-urlencode message="{deploy_msg}" https://cbmi.hipchat.com/v1/rooms/message?auth_token={auth_token}'.format(
+        deploy_msg=deploy_msg,
+        auth_token=auth_token
+    ))
 
+    client = etcd.Client(host=project_config['etcd_host'])
+    client.write('/applications/omop_harvest/status/{0}/latest_commit'.format(env.git_branch), commit)
+    client.write('/applications/omop_harvest/status/{0}/latest_deploy'.format(env.git_branch), 'http://{0}:{1}'.format(env.host_string, port))
 
-@host_context
-def migrate(app_name=None, revision=None):
-    "Syncs and migrates the database using South."
-    cmd = ['python bin/manage.py syncdb --migrate']
-    verun('uname')
-    if app_name:
-        cmd.append(app_name)
-        if revision:
-            cmd.append(revision)
-    verun(' '.join(cmd))
+    print(green('Now Running at http://{0}:{1}'.format(env.host_string, port)))
 
 @host_context
-def collect_static():
-    "Run Django's collectstatic utility."
-    cmd = 'python bin/manage.py collectstatic --noinput'
-    verun(cmd)
-
-@host_context
-def rebuild_index():
-    "Run Django's collectstatic utility."
-    cmd = 'python bin/manage.py rebuild_index --noinput'
-    verun(cmd)
-
-@host_context
-def symlink_nginx():
-    "Symlinks the nginx config to the host's nginx conf directory."
-    with cd(env.path):
-        sudo('ln -sf $PWD/server/nginx/{host}.conf '
-            '{nginx_conf_dir}/omop_harvest_{host}.conf'.format(**env))
-
-
-@host_context
-def reload_nginx():
-    "Reloads nginx if the config test succeeds."
-    symlink_nginx()
-
-    if sudo('/etc/init.d/nginx configtest').succeeded:
-        sudo('/etc/init.d/nginx reload')
-    elif not confirm(yellow('nginx config test failed. continue?')):
-        abort('nginx config test failed. Aborting')
-
-
-@host_context
-def reload_supervisor():
-    "Re-link supervisor config and force an update to supervisor."
-    with cd(env.path):
-        sudo('ln -sf $PWD/server/supervisor/{host}.ini '
-            '{supervisor_conf_dir}/omop_harvest_{host}.ini'.format(**env))
-    run('supervisorctl update')
-
-
-@host_context
-def reload_wsgi():
-    "Gets the PID for the wsgi process and sends a HUP signal."
-    if env.command == 'ci_deploy':
-        run('supervisorctl restart omop_harvest_development')
-    else:
-        pid = run('supervisorctl pid omop_harvest_{host}'.format(host=env.host))
-        try:
-            int(pid)
-            sudo('kill -HUP {}'.format(pid))
-        except (TypeError, ValueError):
-            pass
-
-
-@host_context
-def reload_memcached():
-    "Reloads memcached. WARNING this flushes all cache!"
-    sudo('/etc/init.d/memcached reload')
-
-@host_context
-def deploy(force=False):
-    setup()
-    upload_settings()
-    # upload_etl_config()
-    mm_on()
-    # merge_commit(commit)
-    install_deps(force)
-    migrate()
-    make()
-    collect_static()
-    rebuild_index()
-    symlink_nginx()
-    reload_nginx()
-    reload_supervisor()
-    reload_wsgi()
-    if confirm(yellow('Reload memcached?')):
-        reload_memcached()
-    mm_off()
-
-@host_context
-def ci_deploy():
-    print(env.host)
-    if env.host == 'test':
-        env.user = 'user001'
-        env.password = 'user001'
-    else:
-        env.host_string = "devuser@resrhtiuws06.research.chop.edu"
-        env.user = "devuser"
-        env.password = "devuser"
-    setup() 
-    upload_settings() 
-    install_deps() 
-    migrate() 
-    make() 
-    collect_static() 
-    rebuild_index() 
-    reload_wsgi()
-
-@host_context
-def make():
-    "Rebuilds all static files using the Makefile."
-    verun('make')
-
-@host_context
-def setup():
+def setup_env():
     "Sets up the initial environment."
     parent, project = os.path.split(env.path)
     if not exists(parent):
+<<<<<<< HEAD
         run('mkdir -p {}'.format(parent))
         run('virtualenv {}'.format(parent))
 =======
@@ -462,11 +480,15 @@ def setup_env():
     if not exists(parent):
         run('mkdir -p {}}'.format(parent))
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+        run('mkdir -p {}}'.format(parent))
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
 
     with cd(parent):
         if not exists(project):
             run('git clone {repo_url} {project}'.format(project=project, **env))
             with cd(project):
+<<<<<<< HEAD
 <<<<<<< HEAD
                 run('git checkout {branch}'.format(**env))
                 run('git pull origin {branch}'.format(**env))
@@ -569,6 +591,12 @@ def mm_off():
                 run('git pull origin {git_branch}'.format(**env))
         else:
             with cd(project):
+=======
+                run('git checkout {git_branch}'.format(**env))
+                run('git pull origin {git_branch}'.format(**env))
+        else:
+            with cd(project):
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment
                 run('git checkout {git_branch}'.format(**env))
                 run('git pull origin {git_branch}'.format(**env))
 
@@ -756,4 +784,7 @@ def ci_setup(noinput=False):
         omop_harvest_port = local("docker inspect --format='{{{{range $p, $conf := .NetworkSettings.Ports}}}}{{{{(index $conf 0).HostPort}}}} {{{{end}}}}' {0}".format(omop_harvest), capture=True)
 
     print(red('\n***\nomop_harvest Production Clone now running on: http://localhost:{0}'.format(omop_harvest_port)))
+<<<<<<< HEAD
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+>>>>>>> 09e38be... Adding customized fabfile for managed deployment in CID environment

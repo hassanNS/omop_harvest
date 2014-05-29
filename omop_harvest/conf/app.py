@@ -34,10 +34,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
 <<<<<<< HEAD
+<<<<<<< HEAD
     'chopauth',
 =======
 
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+    'chopauth',
+>>>>>>> bb3c1ac... Adding chopauth
     'registration',
 )
 
@@ -353,19 +357,29 @@ MODELTREES = {
 # Haystack Configuration
 #
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b3705e9... Updating app.py with new HAY_STACK settings
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
         'PATH': os.path.join(os.path.dirname(__file__), 'whoosh.index')
     }
 }
+<<<<<<< HEAD
 =======
 HAYSTACK_SITECONF = 'avocado.search_sites'
+=======
+#HAYSTACK_SITECONF = 'avocado.search_sites'
+>>>>>>> 6367aae... Adding LDAP as an option in settings
 
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
+#HAYSTACK_SEARCH_ENGINE = 'whoosh'
 
 HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), 'whoosh.index')
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+>>>>>>> b3705e9... Updating app.py with new HAY_STACK settings
 
 AVOCADO = {
     'METADATA_MIGRATION_APP': 'omop_harvest',

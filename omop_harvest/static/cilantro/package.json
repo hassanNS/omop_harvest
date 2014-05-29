@@ -1,10 +1,14 @@
 {
   "name": "cilantro",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "version": "2.2.0",
 =======
   "version": "2.2.33",
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+  "version": "2.2.33",
+>>>>>>> 3bd2d9b... Start PEDSnet development
   "license": "BSD",
   "description": "Client library for Serrano-compatible APIs",
   "homepage": "https://github.com/cbmi/cilantro",
@@ -36,6 +40,7 @@
   },
   "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "coffee-script": "~1.6.3",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.7.1",
@@ -44,12 +49,27 @@
     "grunt-contrib-sass": "~0.5.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-copy": "~0.4.1",
+=======
+    "coffee-script": "~1.7.1",
+    "grunt": "~0.4.4",
+    "grunt-amdcheck": "^0.2.2",
+>>>>>>> 3bd2d9b... Start PEDSnet development
     "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-jasmine": "~0.5.2",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-template-jasmine-requirejs": "~0.1.7",
+    "grunt-contrib-sass": "~0.7.3",
+    "grunt-contrib-watch": "~0.6.1",
     "grunt-symlink": "~0.4.0",
+    "grunt-template-jasmine-requirejs": "~0.1.10",
+    "jshint": "^2.5.1",
+    "jshint-stylish": "^0.1.5",
+    "requirejs": "~2.1.11",
     "rjs-build-analysis": "0.0.3",
+<<<<<<< HEAD
     "shelljs": "~0.2.6",
     "semver-utils": "~1.1.0"
 =======
@@ -74,5 +94,9 @@
     "semver-utils": "~1.1.0",
     "shelljs": "~0.2.6"
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+    "semver-utils": "~1.1.0",
+    "shelljs": "~0.2.6"
+>>>>>>> 3bd2d9b... Start PEDSnet development
   }
 }

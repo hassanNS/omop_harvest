@@ -144,11 +144,17 @@ RUN /opt/ve/harvest-app/bin/pip install pycap
 RUN /opt/ve/harvest-app/bin/pip install csvkit
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Upgrades
 RUN /opt/ve/harvest-app/bin/pip install -U "avocado>=2.3.0,<2.4.0" "whoosh>=2.6,<2.7" "django-haystack>=2.0,<2.2"
 
 =======
 >>>>>>> 54c9504... Adding a Dockefile flexible enough to run externally on Travis and Internally.
+=======
+# Upgrades
+RUN /opt/ve/harvest-app/bin/pip install -U "avocado>=2.3.0,<2.4.0" "whoosh>=2.6,<2.7" "django-haystack>=2.0,<2.2"
+
+>>>>>>> 157d25d... Upgrade whoosh and avocado
 # Add the application files
 ADD . /opt/apps/harvest-app
 

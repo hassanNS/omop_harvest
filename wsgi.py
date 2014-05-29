@@ -11,7 +11,11 @@ os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')
 # setting points here.
 from django.core.wsgi import get_wsgi_application
 <<<<<<< HEAD
+<<<<<<< HEAD
 application = get_wsgi_application()
 =======
 application = get_wsgi_application()
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+application = get_wsgi_application()
+>>>>>>> 5503fe3... Adding wsgi.py from ATI template

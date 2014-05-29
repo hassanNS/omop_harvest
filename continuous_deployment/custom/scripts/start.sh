@@ -4,6 +4,7 @@ service memcached start
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Install CHOP Authentication for CHOP/CID
 cd /opt/apps/harvest-app/ && /opt/ve/harvest-app/bin/pip install http://github.research.chop.edu/cbmi/django-chopauth/archive/master.tar.gz
 
@@ -12,6 +13,11 @@ cd /opt/apps/harvest-app/ && /opt/ve/harvest-app/bin/fab get_configuration:noinp
 =======
 >>>>>>> 0a60ab5... Adding continuous_deployment subfolder with CID hooks
 =======
+=======
+# Install CHOP Authentication for CHOP/CID
+cd /opt/apps/harvest-app/ && /opt/ve/harvest-app/bin/pip install http://github.research.chop.edu/cbmi/django-chopauth/archive/master.tar.gz
+
+>>>>>>> 9e6890f... Adding chopauth installation to to CID container start script
 cd /opt/apps/harvest-app/ && /opt/ve/harvest-app/bin/fab get_configuration:noinput=True
 
 >>>>>>> b2a7891... Get etcd app configuration settings when starting the container

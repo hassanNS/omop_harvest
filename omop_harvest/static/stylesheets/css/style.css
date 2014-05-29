@@ -29,12 +29,18 @@ code {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3bd2d9b... Start PEDSnet development
 body, #concept-panel, #context-panel {
     padding-top: 40px;
 }
 
+<<<<<<< HEAD
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
+=======
+>>>>>>> 3bd2d9b... Start PEDSnet development
 @media (max-width: 979px) {
     body {
         padding-top: 0

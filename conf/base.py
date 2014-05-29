@@ -2,13 +2,19 @@ import os
 
 # Import global settings to make it easier to extend settings.
 from django.conf.global_settings import *
+from django.core.exceptions import ImproperlyConfigured
+
+def get_env_variable(var_name):
+    """ Get the environment variable or return an exception"""
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
 
 # Import the project module to calculate directories relative to the module
 # location.
 PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..')
-PROJECT_ROOT, PROJECT_MODULE_NAME = os.path.split(
-    os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-)
 
 # List all Django apps here. Note that standard Python libraries should not
 # be added to this list since Django will not recognize them as apps anyway.
@@ -34,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'registration',
+    'harvest_data',
 )
 
 
@@ -52,24 +58,8 @@ MANAGERS = ADMINS
 INTERNAL_IPS = ('127.0.0.1', '::1')
 
 DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
-
-DIR = os.path.abspath(os.path.dirname(__file__))
-
-#
-# DATABASES
-# Each database can be specified here, but passwords should be in a separate
-# file that is not versioned. Use ``local_settings.py``.
-#
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_PATH, 'omop_harvest.db')
-    }
-}
-
-
 #
 # LOCALITY
 #
@@ -127,12 +117,13 @@ STATIC_URL = '/static/'
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-# Additional locations of static files
-# Put strings here, like "/home/html/static" or "C:/www/django/static".
-# Always use forward slashes, even on Windows.
-# Don't forget to use absolute paths, not relative paths.
-STATICFILES_DIRS = ()
-
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    # project level static files
+    os.path.join(PROJECT_PATH, 'omop_harvest', 'static'),
+)
 #
 # TEMPLATES
 #
@@ -158,31 +149,22 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 # the WSGI application (static and media files), these need to be updated to
 # reflect this discrepancy.
 FORCE_SCRIPT_NAME = ''
-LOGIN_URL = FORCE_SCRIPT_NAME + '/login/'
-LOGIN_REDIRECT_URL = FORCE_SCRIPT_NAME + '/query/'
-LOGOUT_URL = '/logout/'
+
 ROOT_URLCONF = 'omop_harvest.conf.urls'
+
+# LOGIN_URL = '/login/'
+# LOGOUT_URL = '/logout/'
 
 # For non-publicly accessible applications, the siteauth app can be used to
 # restrict access site-wide.
 # SITEAUTH_ACCESS_ORDER = 'allow/deny'
 #
-SITEAUTH_ALLOW_URLS = (
-    r'^log(in|out)/',
-    r'^password/reset/',
-    r'^(register|verify)/',
-)
-
-SITEAUTH_DENY_URLS = (
-    r'^workspace/',
-    r'^workspace/discover/',
-    r'^query/',
-    r'^results/+',
-    r'^api/+',
-    r'^details/\d+/',
-    r'^moderate/+',
-    r'^verify/+',
-)
+# SITEAUTH_ALLOW_URLS = (
+#     r'^$',
+#     r'^log(in|out)/',
+#     r'^password/reset/',
+#     r'^(register|verify)/',
+# )
 
 #
 # MIDDLEWARE
@@ -194,7 +176,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'siteauth.middleware.SiteAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'serrano.middleware.SessionMiddleware',
 )
@@ -204,8 +185,8 @@ MIDDLEWARE_CLASSES = (
 # EMAIL
 #
 
-SUPPORT_EMAIL = 'cbmisupport@email.chop.edu'
-DEFAULT_FROM_EMAIL = 'cbmisupport@email.chop.edu'
+SUPPORT_EMAIL = 'support@example.com'
+DEFAULT_FROM_EMAIL = 'support@example.com'
 EMAIL_SUBJECT_PREFIX = '[omop_harvest] '
 SEND_BROKEN_LINK_EMAILS = False
 
@@ -222,7 +203,7 @@ SEND_BROKEN_LINK_EMAILS = False
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters' :{
+    'formatters': {
         'standard': {
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
         }
@@ -234,29 +215,29 @@ LOGGING = {
     },
     'handlers': {
         'default': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': 'logs/omop.log',
-            'maxBytes': 1024*1024*5, # 5 MB
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/omop_harvest.log',
+            'maxBytes': 1024*1024*5,  # 5 MB
             'backupCount': 5,
-            'formatter':'standard',
+            'formatter': 'standard',
         },
         'request_handler': {
-                'level':'DEBUG',
-                'class':'logging.handlers.RotatingFileHandler',
-                'filename': 'logs/omop_request.log',
-                'maxBytes': 1024*1024*5, # 5 MB
-                'backupCount': 5,
-                'formatter':'standard',
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/omop_harvest_requests.log',
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'standard',
         },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'console':{
+        'console': {
             'level': 'DEBUG',
-            'class':'logging.StreamHandler',
+            'class': 'logging.StreamHandler',
         }
     },
     'loggers': {
@@ -270,18 +251,19 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False
         },
-        'avocado':{
+        'avocado': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
         },
-        'serrano':{
-            'handlers':['console'],
+        'serrano': {
+            'handlers': ['console'],
             'level': 'DEBUG',
-            'propagate':True,
+            'propagate': True,
         },
     }
 }
+
 
 #
 # CACHE
@@ -339,36 +321,24 @@ SITE_ID = 1
 # ModelTrees Configuration
 #
 
-MODELTREES = {
-    'default': {
-        'model': 'omop_harvest.Person',
-    }
-}
-
-#
-# Haystack Configuration
-#
-<<<<<<< HEAD
-<<<<<<< HEAD
-HAYSTACK_SITECONF = 'avocado.search_sites'
-
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-
-HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), 'whoosh.index')
-=======
-=======
->>>>>>> 3bd2d9b... Start PEDSnet development
+# MODELTREES = {
+#     'default': {
+#         'model': '',
+#     }
+# }
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh.index')
+        'PATH': os.path.join(os.path.dirname(__file__), '../../whoosh.index'),
     }
 }
-<<<<<<< HEAD
->>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
-=======
->>>>>>> 3bd2d9b... Start PEDSnet development
 
 AVOCADO = {
+    'DATA_CACHE_ENABLED': False,
     'METADATA_MIGRATION_APP': 'omop_harvest',
 }
+
+# eHB Plugins Configuration
+PLUGINS = {}
+
+DATABASE_ROUTERS = ['omop_harvest.routers.Router']

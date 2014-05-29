@@ -37,13 +37,24 @@ from app import *
 import dj_database_url
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 514f8b4... Adding chopauth settings after other imports
 try:
     from chopauth.settings import *
 except ImportError:
     pass
+<<<<<<< HEAD
 
 =======
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+
+=======
+>>>>>>> 514f8b4... Adding chopauth settings after other imports
+
+>>>>>>> bb3c1ac... Adding chopauth
 curdir = os.path.dirname(os.path.abspath(__file__))
 project_settings = json.loads(open(os.path.join(curdir, '../../.project_config.json'), 'r').read())['project_settings']
 
@@ -67,9 +78,12 @@ else:
     DATABASES = {
         'default': dj_database_url.parse(project_settings[environment]['databases']['default']),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         'portal': dj_database_url.parse(project_settings[environment]['databases']['portal']),
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+>>>>>>> 6367aae... Adding LDAP as an option in settings
     }
 
 
@@ -86,23 +100,33 @@ else:
     CACHES = {
         'default': {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e0d52ae... Removing LDAP settings from settins.py
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
             'LOCATION': 'unique',
             'KEY_PREFIX': 'omop_harvest',
             'VERSION': 1,
+<<<<<<< HEAD
 =======
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+>>>>>>> e0d52ae... Removing LDAP settings from settins.py
         }
     }
 
 EMAIL_PORT = project_settings[environment]['django']['EMAIL_PORT']
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 EMAIL_SUBJECT_PREFIX = '[OMOP Harvest] '
 =======
 EMAIL_SUBJECT_PREFIX = '[brand_new Local] '
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+EMAIL_SUBJECT_PREFIX = '[OMOP Harvest] '
+>>>>>>> e0d52ae... Removing LDAP settings from settins.py
 
 DEBUG = project_settings[environment]['django']['DEBUG']
 
@@ -111,6 +135,10 @@ FORCE_SCRIPT_NAME = project_settings[environment]['django']['FORCE_SCRIPT_NAME']
 SECRET_KEY = project_settings[environment]['django']['SECRET_KEY']
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 65805ea... Adding chopauth
 # LDAP
 LDAP = {}
 LDAP['DEBUG'] = project_settings[environment]['django']['LDAP']['DEBUG']
@@ -119,6 +147,7 @@ LDAP['SEARCHDN'] = project_settings[environment]['django']['LDAP']['SEARCHDN']
 LDAP['SEARCH_FILTER'] = project_settings[environment]['django']['LDAP']['SEARCH_FILTER']
 LDAP['SERVER_URI'] = project_settings[environment]['django']['LDAP']['SERVER_URI']
 LDAP['PREBINDPW'] = project_settings[environment]['django']['LDAP']['PREBINDPW']
+<<<<<<< HEAD
 
 REGISTRATION_MODERATORS = project_settings[environment]['django']['REGISTRATION_MODERATORS']
 >>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
@@ -128,4 +157,38 @@ REGISTRATION_MODERATORS = project_settings[environment]['django']['REGISTRATION_
 SERVICE_CLIENT_SETTINGS = project_settings[environment]['django']['SERVICE_CLIENT_SETTINGS'],
 
 PROTOCOL_PROPS = project_settings[environment]['django']['PROTOCOL_PROPS']
+<<<<<<< HEAD
 >>>>>>> e781ef4... Adding django conf files for enabling CID
+=======
+
+# LDAP
+LDAP = {}
+LDAP['DEBUG'] = project_settings[environment]['django']['LDAP']['DEBUG']
+LDAP['PREBINDDN'] = project_settings[environment]['django']['LDAP']['PREBINDDN']
+LDAP['SEARCHDN'] = project_settings[environment]['django']['LDAP']['SEARCHDN']
+LDAP['SEARCH_FILTER'] = project_settings[environment]['django']['LDAP']['SEARCH_FILTER']
+LDAP['SERVER_URI'] = project_settings[environment]['django']['LDAP']['SERVER_URI']
+LDAP['PREBINDPW'] = project_settings[environment]['django']['LDAP']['PREBINDPW']
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Logging
+LOGGING = project_settings[environment]['django']['LOGGING']
+>>>>>>> 6367aae... Adding LDAP as an option in settings
+=======
+>>>>>>> 7cfee90... Removing logging from settings.py
+=======
+## LDAP
+#LDAP = {}
+#LDAP['DEBUG'] = project_settings[environment]['django']['LDAP']['DEBUG']
+#LDAP['PREBINDDN'] = project_settings[environment]['django']['LDAP']['PREBINDDN']
+#LDAP['SEARCHDN'] = project_settings[environment]['django']['LDAP']['SEARCHDN']
+#LDAP['SEARCH_FILTER'] = project_settings[environment]['django']['LDAP']['SEARCH_FILTER']
+#LDAP['SERVER_URI'] = project_settings[environment]['django']['LDAP']['SERVER_URI']
+#LDAP['PREBINDPW'] = project_settings[environment]['django']['LDAP']['PREBINDPW']
+>>>>>>> e0d52ae... Removing LDAP settings from settins.py
+=======
+>>>>>>> 65805ea... Adding chopauth
+=======
+REGISTRATION_MODERATORS = project_settings[environment]['django']['REGISTRATION_MODERATORS']
+>>>>>>> ab64c67... Use linked memcache in deploy

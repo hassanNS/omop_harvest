@@ -1,6 +1,10 @@
 {
   "name": "cilantro",
+<<<<<<< HEAD
   "version": "2.2.0",
+=======
+  "version": "2.2.33",
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
   "license": "BSD",
   "description": "Client library for Serrano-compatible APIs",
   "keywords": [

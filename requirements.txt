@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Django==1.5.5
 
 # Database Drivers, the Python stdlib has support for SQLite
@@ -23,3 +24,29 @@ whoosh==2.4.0
 openpyxl==1.8.0
 git+http://github.research.chop.edu/cbmi/django-chopauth.git@0.1.1#egg=django-chopauth
 django-siteauth==1.0.0
+=======
+--allow-external argparse
+Django>=1.5.5,<1.6
+Markdown
+uWSGI
+Fabric>=1.8
+
+# Database Drivers, the Python stdlib has support for SQLite
+psycopg2
+csvkit
+# cx_oracle
+# mysql-python
+
+# Harvest components
+avocado>=2.3.0,<2.4.0
+serrano>=2.3.0,<2.3.3
+django-haystack>=2.0,<2.2
+python-memcached==1.53
+
+
+# Harvest extensions
+whoosh>=2.6,<2.7
+openpyxl
+django-siteauth==1.0.0
+django-registration2==0.9.3
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)

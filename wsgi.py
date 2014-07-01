@@ -10,4 +10,8 @@ os.environ.setdefault('PYTHON_EGG_CACHE', '/tmp')
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from django.core.wsgi import get_wsgi_application
+<<<<<<< HEAD
 application = get_wsgi_application()
+=======
+application = get_wsgi_application()
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)

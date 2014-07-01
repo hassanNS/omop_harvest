@@ -4,7 +4,11 @@
 ({
     // Optimize relative to this url (i.e. the current directory)
     baseUrl: '.',
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
     // The source directory of the modules
     appDir: 'src',
 
@@ -15,6 +19,7 @@
 
     optimizeCss: 'none',
 
+<<<<<<< HEAD
     loglevel: 1,
 
     throwWhen: {
@@ -33,4 +38,13 @@
     },
 
     name: 'main'
+=======
+    paths: {
+        'cilantro': 'empty:',
+        'project': '.'
+    },
+
+    name: 'main'
+
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 })

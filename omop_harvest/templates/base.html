@@ -5,10 +5,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
 
+<<<<<<< HEAD
         <title>{% block title %}{% endblock %}</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+=======
+        <title>PEDSnet Harvest</title>
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap.css">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap-responsive.css">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/3.2.1/css/font-awesome.css">
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
         <link rel=stylesheet href="{{ STATIC_URL }}cilantro/css/style.css">
         <link rel=stylesheet href="{{ CSS_URL }}/style.css">
         {% block styles %}{% endblock %}
@@ -38,7 +48,11 @@
         </div>
 
         <script>{% include "cilantro.js" %}</script>
+<<<<<<< HEAD
         <script src="{{ STATIC_URL }}cilantro/js/require.js"></script>
+=======
+        <script data-main="cilantro/main" src="{{ STATIC_URL }}cilantro/js/require.js"></script>
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
         {% block scripts %}{% endblock scripts %}
 
         {% if not debug %}

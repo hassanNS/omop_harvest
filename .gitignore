@@ -11,6 +11,10 @@
 *.egg
 *.egg-info
 pip-log.txt
+<<<<<<< HEAD
+=======
+.python-version
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 
 # Server-related
 *.sock
@@ -23,6 +27,10 @@ MANIFEST
 
 # Fabric hosts if using the provided fabfile.py
 .fabhosts
+<<<<<<< HEAD
+=======
+.project_config.json
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 
 # Avocado search engine index
 whoosh.index
@@ -31,6 +39,12 @@ whoosh.index
 local_settings.py
 settings
 
+<<<<<<< HEAD
+=======
+# Ignore sqlite db used for testing
+omop_harvest.db
+
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 # Ignore optimized scripts
 omop_harvest/static/scripts/javascript/min
 

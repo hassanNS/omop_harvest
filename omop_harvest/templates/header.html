@@ -2,7 +2,11 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class=navbar-inner>
         <div class=container-fluid>
+<<<<<<< HEAD
             <a href="{% url "landing" %}" class="brand"> OMOP </a>
+=======
+            <a href="{% url "landing" %}" class="brand"> PEDSnet Harvest </a>
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
             {% if user.is_authenticated %}
             <ul class=nav>
                 <li><a href="{% url "workspace" %}"><i class="icon-home"></i> <span class=hidden-phone>Workspace</a></li>                

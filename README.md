@@ -41,7 +41,11 @@ You can install this project on your local server, using any dataset in OMOP CDM
 
 ### 4. Load data into your database
 
+<<<<<<< HEAD
 - Using an OMOP released OSIM2 dataset
+=======
+- Using an OMOP released OSIM2 dataset (please review `etl/KNOWN_ISSUES.md` before filing issues related to this process)
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 
     - Download and Extract Data
     
@@ -92,6 +96,11 @@ Make sure the SQL is compatible with your database and the tables which are refe
 
 ### 7. Run South migrations
 
+<<<<<<< HEAD
+=======
+    # Syncdb essential, non-South migration using apps
+    python bin/manage.py syncdb
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
     # Fake the initial project model migration, as we already created the tables
     python bin/manage.py migrate --fake omop_harvest 0001
     # Migrate all apps forward; this will run the SQL code reviewed in the last step, so it may take a while

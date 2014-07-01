@@ -28,6 +28,13 @@ code {
     right: 0;
 }
 
+<<<<<<< HEAD
+=======
+body, #concept-panel, #context-panel {
+    padding-top: 40px;
+}
+
+>>>>>>> 0e24556... Adding Containerization (Docker) and Subfolder for Continuous Integration and Deployment (CID)
 @media (max-width: 979px) {
     body {
         padding-top: 0

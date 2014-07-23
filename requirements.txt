@@ -10,6 +10,12 @@ csvkit
 # cx_oracle
 # mysql-python
 
+# Dependencies for Fabric and project setttings
+dj-database-url
+etcd
+requests
+pytz
+
 # Harvest components
 avocado>=2.3.0,<2.4.0
 serrano>=2.3.0,<2.3.3

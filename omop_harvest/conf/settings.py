@@ -22,16 +22,21 @@ LINKED_DB_IP = os.environ.get('DB_PORT_5432_TCP_ADDR')
 # Check here to see if memcache details exist in env
 LINKED_MEMCACHE = os.environ.get('MC_PORT_11211_TCP_ADDR')
 
-if LINKED_DB_IP:
-    DATABASES = {
-        # TODO: Make the db name here dependent on the project_settings
-        'default': dj_database_url.parse('postgresql://docker:docker@{0}:5432/omop_harvest'.format(LINKED_DB_IP))
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(project_settings[environment]['databases']['default']),
-        'omop': dj_database_url.parse(project_settings[environment]['databases']['omop'])
-    }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'asmalltestdb'
+        }
+}
+#if LINKED_DB_IP:
+#    DATABASES = {
+#        'default': dj_database_url.parse('postgresql://docker:docker@{0}:5432/omop_harvest'.format(LINKED_DB_IP)),
+#        'portal': dj_database_url.parse(project_settings[environment]['databases']['portal']),
+#    }
+#else:
+#    DATABASES = {
+#        'default': dj_database_url.parse(project_settings[environment]['databases']['default']),
+#    }
 
 
 if LINKED_MEMCACHE:
@@ -54,7 +59,7 @@ FORCE_SCRIPT_NAME = project_settings[environment]['django']['FORCE_SCRIPT_NAME']
 
 SECRET_KEY = project_settings[environment]['django']['SECRET_KEY']
 
-ALLOWED_HOSTS = project_settings[environment]['django']['ALLOWED_HOSTS']
+#ALLOWED_HOSTS = project_settings[environment]['django']['HOSTS']
 
 if FORCE_SCRIPT_NAME:
     ADMIN_MEDIA_PREFIX = os.path.join(FORCE_SCRIPT_NAME, ADMIN_MEDIA_PREFIX[1:])
